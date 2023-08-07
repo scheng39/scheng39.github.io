@@ -19,45 +19,28 @@ const { review } = window;
 
 
 //first step: when DOM is loaded
-addEventListener("DOMContentLoaded", function () {
-
-console.log("Loaded!");
+document.addEventListener("DOMContentLoaded", function () {
 
 //Step2: display review cards dynamically
-
 displayReview();
 
 
 //DOM: when form is submitted
   const reviewform = document.querySelector(".myForm");
-  reviewform.addEventListener("submit", updateReview);
 
-  function updateReview(e) {
-    
-    e.preventDefault();
-
-    const username = document.querySelector("#review-username").value;
-    const date = document.querySelector("#review-date").value;
-    const comment = document.querySelector("#review-comment").value;
-    const rating = document.querySelector('input[name="rating"]:checked').value;
-
-    const newReview = {name: username, date:date, rating: parseInt(rating), comment: comment};
-    review.push(newReview);
-
-    let reviewWrapBox = document.querySelector(".review-wrapper");
-    reviewWrapBox.innerHTML = "";
-    displayReview();
+  if(reviewform){
+    reviewform.addEventListener("submit", updateReview);
   }
-
-
-
-
+ 
 
 }); //END of DOM
 
 
 function displayReview(){
+
   let reviewWrapBox = document.querySelector(".review-wrapper");
+
+  if(reviewWrapBox){
 
   review.forEach(function (reviews, index){
 
@@ -106,5 +89,22 @@ function displayReview(){
     reviewWrapBox.appendChild(indiReview);
   
     });
+  }
 }
 
+function updateReview(e) {
+      
+  e.preventDefault();
+
+  const username = document.querySelector("#review-username").value;
+  const date = document.querySelector("#review-date").value;
+  const comment = document.querySelector("#review-comment").value;
+  const rating = document.querySelector('input[name="rating"]:checked').value;
+
+  const newReview = {name: username, date:date, rating: parseInt(rating), comment: comment};
+  review.push(newReview);
+
+  let reviewWrapBox = document.querySelector(".review-wrapper");
+  reviewWrapBox.innerHTML = "";
+  displayReview();
+}
